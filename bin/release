@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# bin/release <build-dir>
+
+BUILD_DIR=$1
+
+cat <<EOF
+---
+config_vars:
+  PATH: /app/.jdk/bin:/app/takipi/bin:/usr/local/bin:/usr/bin:/bin
+  LD_LIBRARY_PATH: /app/takipi/lib
+  JAVA_OPTS: -Xmx384m -Xss512k -XX:+UseCompressedOops
+  MAVEN_OPTS: -Xmx384m -Xss512k -XX:+UseCompressedOops 
+addons:
+  heroku-postgresql:dev
+EOF
