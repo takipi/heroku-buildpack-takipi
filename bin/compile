@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-set -e
-
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 BUILD_DIR=$1
 
@@ -30,7 +28,7 @@ takipi_common_install()
 
 	PROFILE_PATH="$BUILD_DIR/.profile.d/takipi.sh"
 	mkdir -p $(dirname $PROFILE_PATH)
-	
+
 	if [ -z "$LD_LIBRARY_PATH" ]; then
 		echo 'export LD_LIBRARY_PATH=/app/takipi/lib' >> $PROFILE_PATH
 	else
