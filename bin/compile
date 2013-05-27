@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
+set -e
+
+BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
+BUILD_DIR=$1
+
 takipi_common_install()
 {
 	TAKIPI_FILE=takipi-latest-heroku.tar.gz
-
+	
 	TAKIPI_BASE=$1
 	TAKIPI_HOME="${TAKIPI_BASE}"/takipi
 	mkdir -p "${TAKIPI_HOME}"
@@ -24,7 +29,8 @@ takipi_common_install()
 	rm -Rf $TAKIPI_FILE >/dev/null 2>&1 # Cleanup
 
 	PROFILE_PATH="$BUILD_DIR/.profile.d/takipi.sh"
-
+	mkdir -p $(dirname $PROFILE_PATH)
+	
 	if [ -z "$LD_LIBRARY_PATH" ]; then
 		echo 'export LD_LIBRARY_PATH=/app/takipi/lib' >> $PROFILE_PATH
 	else
@@ -38,12 +44,6 @@ takipi_common_install()
 	echo 'export PATH="/app/takipi/bin:$PATH"' >> $PROFILE_PATH
 	echo 'export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -agentpath:/app/takipi/lib/libTakipiAgent.so"' >> $PROFILE_PATH
 }
-
-set -e
-
-BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
-
-BUILD_DIR=$1
 
 echo -n "-----> Installing Takipi..."
 takipi_common_install ${BUILD_DIR}
