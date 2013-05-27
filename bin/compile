@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-
 takipi_common_install()
 {
 	TAKIPI_FILE=takipi-latest-heroku.tar.gz
