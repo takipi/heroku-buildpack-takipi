@@ -1,18 +1,51 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-# fail fast
+
+takipi_common_install()
+{
+	TAKIPI_FILE=takipi-latest-heroku.tar.gz
+
+	TAKIPI_BASE=$1
+	TAKIPI_HOME="${TAKIPI_BASE}"/takipi
+	mkdir -p "${TAKIPI_HOME}"
+	
+	curl -s -o $TAKIPI_FILE -L https://s3.amazonaws.com/app-takipi-com/deploy/linux/$TAKIPI_FILE >/dev/null 2>&1
+
+	if [ $? -eq 0 ]; then
+		[ "$VERBOSE" = "1" ] && echo "File downloaded successfully"
+	else
+		echo "Aborting. Can't download file https://s3.amazonaws.com/app-takipi-com/deploy/linux/$TAKIPI_FILE"
+		exit 1
+	fi
+
+	# Unpacking tarball into base dir
+	tar pzxf $TAKIPI_FILE -C "${TAKIPI_BASE}"
+	
+	rm -Rf $TAKIPI_FILE >/dev/null 2>&1 # Cleanup
+
+	PROFILE_PATH="$BUILD_DIR/.profile.d/takipi.sh"
+
+	if [ -z "$LD_LIBRARY_PATH" ]; then
+		echo 'export LD_LIBRARY_PATH=/app/takipi/lib' >> $PROFILE_PATH
+	else
+		echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/takipi/lib"' >> $PROFILE_PATH
+	fi
+	
+	echo "export JVM_LIB_FILE=/app/.jdk/jre/lib/amd64/server/libjvm.so" >> $PROFILE_PATH
+
+	echo "export TAKIPI_HOME=/app/takipi" >> $PROFILE_PATH
+
+	echo 'export PATH="/app/takipi/bin:$PATH"' >> $PROFILE_PATH
+	echo 'export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -agentpath:/app/takipi/lib/libTakipiAgent.so"' >> $PROFILE_PATH
+}
+
 set -e
 
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
-# parse args
+
 BUILD_DIR=$1
-CACHE_DIR=$2
 
-curl --silent --location https://s3.amazonaws.com/app-takipi-com/tests/takipi-buildpack-common.tar.gz | tar xz
-. bin/takipi
-
-# install Takipi
 echo -n "-----> Installing Takipi..."
 takipi_common_install ${BUILD_DIR}
 echo " done"
