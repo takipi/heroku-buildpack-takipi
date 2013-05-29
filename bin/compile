@@ -9,7 +9,7 @@ takipi_common_install()
 	TAKIPI_FILE=takipi-latest-heroku.tar.gz
 	
 	TAKIPI_BASE=$1
-	TAKIPI_HOME="${TAKIPI_BASE}"/takipi
+	TAKIPI_HOME="${TAKIPI_BASE}"/.takipi
 	mkdir -p "${TAKIPI_HOME}"
 	
 	curl -s -o $TAKIPI_FILE -L https://s3.amazonaws.com/app-takipi-com/deploy/linux/$TAKIPI_FILE >/dev/null 2>&1
@@ -30,17 +30,17 @@ takipi_common_install()
 	mkdir -p $(dirname $PROFILE_PATH)
 
 	if [ -z "$LD_LIBRARY_PATH" ]; then
-		echo 'export LD_LIBRARY_PATH=/app/takipi/lib' >> $PROFILE_PATH
+		echo 'export LD_LIBRARY_PATH=/app/.takipi/lib' >> $PROFILE_PATH
 	else
-		echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/takipi/lib"' >> $PROFILE_PATH
+		echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.takipi/lib"' >> $PROFILE_PATH
 	fi
 	
 	echo "export JVM_LIB_FILE=/app/.jdk/jre/lib/amd64/server/libjvm.so" >> $PROFILE_PATH
 
-	echo "export TAKIPI_HOME=/app/takipi" >> $PROFILE_PATH
+	echo "export TAKIPI_HOME=/app/.takipi" >> $PROFILE_PATH
 
-	echo 'export PATH="/app/takipi/bin:$PATH"' >> $PROFILE_PATH
-	echo 'export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -agentpath:/app/takipi/lib/libTakipiAgent.so"' >> $PROFILE_PATH
+	echo 'export PATH="/app/.takipi/bin:$PATH"' >> $PROFILE_PATH
+	echo 'export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -agentpath:/app/.takipi/lib/libTakipiAgent.so"' >> $PROFILE_PATH
 }
 
 echo -n "-----> Installing Takipi..."
