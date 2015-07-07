@@ -7,7 +7,8 @@ We support the
 [Gradle](https://github.com/heroku/heroku-buildpack-gradle), [Grails](https://github.com/heroku/heroku-buildpack-grails)
  and [Play!](https://github.com/heroku/heroku-buildpack-play) default buildpacks.
  
- ### Install Takipi
+ 
+### Install Takipi
 
 In order to use this buildpack enter the directory of your app.
 
