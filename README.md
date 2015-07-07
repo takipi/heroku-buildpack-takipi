@@ -1,6 +1,6 @@
 # heroku-buildpack-takipi
 
-This buildpack is in addition to buildpack for JVM specific language needed to run your application.
+This buildpack need be in addition to buildpack for JVM specific language needed to run your application.
 We support the 
 [Java](https://github.com/heroku/heroku-buildpack-java),
 [Scala](https://github.com/heroku/heroku-buildpack-scala), [Clojure](https://github.com/heroku/heroku-buildpack-clojure),
