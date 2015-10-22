@@ -10,7 +10,6 @@ takipi_common_install()
 	
 	TAKIPI_BASE=$1
 	TAKIPI_HOME="${TAKIPI_BASE}"/.takipi
-	mkdir -p "${TAKIPI_HOME}"
 	
 	curl -s -o $TAKIPI_FILE -L https://s3.amazonaws.com/app-takipi-com/deploy/linux/$TAKIPI_FILE >/dev/null 2>&1
 
@@ -23,7 +22,8 @@ takipi_common_install()
 
 	# Unpacking tarball into base dir
 	tar pzxf $TAKIPI_FILE -C "${TAKIPI_BASE}"
-	
+	mv ${TAKIPI_BASE}/takipi ${TAKIPI_BASE}/.takipi 
+
 	rm -Rf $TAKIPI_FILE >/dev/null 2>&1 # Cleanup
 
 	PROFILE_PATH="$BUILD_DIR/.profile.d/takipi.sh"
