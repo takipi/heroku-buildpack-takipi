@@ -22,7 +22,6 @@ takipi_common_install()
 
 	# Unpacking tarball into base dir
 	tar pzxf $TAKIPI_FILE -C "${TAKIPI_BASE}"
-	mv ${TAKIPI_BASE}/takipi ${TAKIPI_BASE}/.takipi 
 	mkdir -p ${TAKIPI_BASE}/.takipi/log/agents
 	chmod 777 ${TAKIPI_BASE}/.takipi/log/agents
 
