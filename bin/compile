@@ -40,7 +40,6 @@ takipi_common_install()
 	echo "export TAKIPI_HOME=/app/.takipi" >> $PROFILE_PATH
 
 	echo 'export PATH="/app/.takipi/bin:$PATH"' >> $PROFILE_PATH
-	echo 'export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -agentpath:/app/.takipi/lib/libTakipiAgent.so"' >> $PROFILE_PATH
 }
 
 echo -n "-----> Installing Takipi..."
