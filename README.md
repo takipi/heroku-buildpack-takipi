@@ -29,6 +29,8 @@ Your Procfile should resemble this sample:
 web: java $JAVA_OPTS -agentlib:TakipiAgent -jar target/dependency/jetty-runner.jar --port $PORT target/*.war
 ```
 
+Rebuild your app to finalize the setup.
+
 You're all done! Head to https://app.takipi.com to see the magic.
 
 Questions? E-Mail hello@takipi.com.
