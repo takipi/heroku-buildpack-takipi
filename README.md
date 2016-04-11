@@ -1,32 +1,34 @@
 # heroku-buildpack-takipi
 
-This buildpack need be in addition to buildpack for JVM specific language needed to run your application.
-We support the 
-[Java](https://github.com/heroku/heroku-buildpack-java),
-[Scala](https://github.com/heroku/heroku-buildpack-scala), [Clojure](https://github.com/heroku/heroku-buildpack-clojure),
-[Gradle](https://github.com/heroku/heroku-buildpack-gradle), [Grails](https://github.com/heroku/heroku-buildpack-grails)
- and [Play!](https://github.com/heroku/heroku-buildpack-play) default buildpacks.
+This buildpack is used to Install Takipi on a working Heroku JVM application (Java, Scala, Gradle, Clojure, Grails, Play).
+Configuring Takipi is a quick 3 steps: provision, install and connect. 
+
+### Provisioning
+
+Using the CLi, add the Takipi Heroku addon:
+```
+heroku addons:create takipi:lite
+```
+You can also use the Heroku dashboard to achieve the same. Have a look [here](https://elements.heroku.com/addons/takipi).
  
- 
-### Install Takipi
+### Installation
 
 In order to use this buildpack enter the directory of your app.
 
 For a new app (If you already have a running app - go ahead the next level):
 By default, Heroku will choose the best buildpack for your app automatically. But in many cases, you will need to explicitly define the JVM specific language buildpack: 
 
-`heroku create myapp --buildpack <Here_insert_the_buildpack_link>`
-
- Once you have a running app run:
-
 `heroku buildpacks:add https://github.com/takipi/heroku-buildpack-takipi.git`
 
-### Setup Takipi
+### Connecting Takipi
 
-Once your app is configured to run Takipi, either add [Takipi addon](https://addons.heroku.com/takipi) or setup Takipi manually:
+Takipi needs to attach to your Java process by adding `-agentlib:TakipiAgent` jvm argument. 
+Your Procfile should resemble this sample:
 
-1. Create an account at https://app.takipi.com/account.html
-2. Run : `heroku config:get TAKIPI_SECRET_KEY`
-2. Run `heroku config:set TAKIPI_SECRET_KEY=S193#...` with the key received in the previous step.
- 
+```
+web: java $JAVA_OPTS -agentlib:TakipiAgent -jar target/dependency/jetty-runner.jar --port $PORT target/*.war
+```
 
+Questions? E-Mail hello@takipi.com.
+
+www.takipi.com
