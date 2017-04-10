@@ -6,7 +6,7 @@ BUILD_DIR=$1
 
 takipi_common_install()
 {
-	TAKIPI_FILE=takipi-latest-heroku-1lde.tar.gz
+	TAKIPI_FILE=takipi-latest-heroku.tar.gz
 	
 	TAKIPI_BASE=$1
 	TAKIPI_HOME="${TAKIPI_BASE}"/.takipi
