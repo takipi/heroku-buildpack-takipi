@@ -4,13 +4,11 @@ This buildpack is used to Install Takipi on a working Heroku JVM application (Ja
 Configuring Takipi is a quick 3 steps: provision, install and connect. 
 
 ### Provisioning
+The heroku add-on is now deprecated. 
+In order to provision Heroku:
+1. Sign up for OverOps to get an installation key (e.g. S1#11#13f#affa)
+2. Add the installation key as an environment variable named `TAKIPI_SECRET_KEY`
 
-Using the CLi, add the Takipi Heroku addon:
-```
-heroku addons:create takipi:lite
-```
-You can also use the Heroku dashboard to achieve the same. Have a look [here](https://elements.heroku.com/addons/takipi).
- 
 ### Installation
 
 In order to use this buildpack enter the directory of your app.
