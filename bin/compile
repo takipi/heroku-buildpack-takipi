@@ -7,10 +7,10 @@ BUILD_DIR=$1
 takipi_common_install()
 {
 	TAKIPI_FILE=takipi-heroku-latest.tar.gz
-	
+
 	TAKIPI_BASE=$1
 	TAKIPI_HOME="${TAKIPI_BASE}"/.takipi
-	
+
 	curl -s -o $TAKIPI_FILE -L https://s3.amazonaws.com/app-takipi-com/deploy/linux/$TAKIPI_FILE >/dev/null 2>&1
 
 	if [ $? -eq 0 ]; then
@@ -22,7 +22,9 @@ takipi_common_install()
 
 	# Unpacking tarball into base dir
 	tar pzxf $TAKIPI_FILE -C "${TAKIPI_BASE}"
-	mv ${TAKIPI_BASE}/takipi ${TAKIPI_BASE}/.takipi 
+	mkdir -p ${TAKIPI_BASE}/takipi/log
+	mkdir -p ${TAKIPI_BASE}/takipi/work
+	mv ${TAKIPI_BASE}/takipi ${TAKIPI_BASE}/.takipi
 
 	rm -Rf $TAKIPI_FILE >/dev/null 2>&1 # Cleanup
 
@@ -34,7 +36,7 @@ takipi_common_install()
 	else
 		echo 'export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/app/.takipi/lib"' >> $PROFILE_PATH
 	fi
-	
+
 	echo "export JVM_LIB_FILE=/app/.jdk/jre/lib/amd64/server/libjvm.so" >> $PROFILE_PATH
 
 	echo "export TAKIPI_HOME=/app/.takipi" >> $PROFILE_PATH
